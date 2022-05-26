@@ -1,7 +1,7 @@
 #include "assignment/subset_sum/bit_masking.hpp"
 
 #include <cassert>  // assert
-
+#include <iostream>
 #include "assignment/bits.hpp"  // is_bit_set, mask2indices
 
 namespace assignment {
@@ -18,6 +18,28 @@ namespace assignment {
     // 2. Внутренний цикл: проверка разрядов битовой маски и генерация подмножества, ассоциирующегося с этой маской
     // 3. Подсчет суммы текущего подмножества, сохранение индексов подмножества с целевой суммой в результат
     // Tips: можно пропустить итерацию, если сумма текущего подмножества стала больше целевой суммы
+    for (int mask = 0; mask < num_subsets; mask++){
+
+      std::vector<int> subtest;
+
+      for (int pos = 0; pos < num_elems; pos++){
+        if (is_bit_set(mask, pos)){
+          subtest.push_back(pos);
+        }
+      }
+
+      int current_sum = 0;
+      for (int i = 0; i < subtest.size(); i++){
+        current_sum += set[subtest[i]];
+        if (current_sum > target_sum){
+          break;
+        }
+      }
+
+      if (current_sum == target_sum){
+        indices.push_back(subtest);
+      }
+    }
 
     return indices;
   }
